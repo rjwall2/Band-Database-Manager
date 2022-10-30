@@ -10,7 +10,7 @@ This application is intended to be used by people who work in the record label i
 that market recorded music for bands. The application allows record labels and bands to organize logistic information about songs, concerts,
 merchandise, and more.
 
-For a more detailed project description and functionalities we plan to provide, see file "Milestone 1".
+For a more detailed project description and functionalities we plan to provide, see file "Milestone 1.pdf".
 
 #### What is our tech stack?
 Our tech stack is PHP/Oracle. We are planning to use CSS+HTML for the front-end and Python for the back-end (tentative).

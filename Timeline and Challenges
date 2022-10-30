@@ -1,11 +1,11 @@
 Timeline : 
 
-- Add CREATE TABLE statements as well as INSERT statements from milestone 3 to the database, edit as needed (backend). Deadline goal = ...
+- Add CREATE TABLE statements as well as INSERT statements from milestone 3 to the database, edit as needed (backend). Deadline goal = Nov 8, 2022
 - Add query implementations required (ex. insert, delete, update...specified in milestone 4) that users will use (backend). Deadline goal = ...
 - Develop GUI for the user to interat with the database through (ex. to use the query functions developed) (frontend). Deadline goal = ...
 - Write project description into a PDF. Includes what it accomplishes, the schema and how it (possibly) changed since milestone 2, and the data present 
   during intilialization. Deadline goal = Nov 23, 2022
-- Create README file including any extra information that may be required. Deadline goal = Nov 23. 2022
+- Create README file including any extra information that may be required. Deadline goal = Nov 23, 2022
 - Prepare a demo. Deadline goal = Nov 30, 2022
 
 Challenges:

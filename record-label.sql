@@ -393,4 +393,6 @@ INSERT INTO Contains(AlbumName, SongName, BandName) VALUES ('Rumours', 'The Chai
 
 INSERT INTO Contains(AlbumName, SongName, BandName) VALUES ('Night Visions', 'Radioactive', 'Imagine Dragons');
 
-INSERT INTO Contains(AlbumName, SongName, BandName) VALUES ('Waking Up', 'Good Life', 'One Repub lic'); 
+INSERT INTO Contains(AlbumName, SongName, BandName) VALUES ('Waking Up', 'Good Life', 'One Republic'); 
+
+--Somethin 

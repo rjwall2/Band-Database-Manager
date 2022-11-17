@@ -143,8 +143,8 @@ CREATE TABLE Consists_Of (
 	BandMemberName CHAR(25),
 	BandMemberBirthDate INTEGER,
 	PRIMARY KEY (Band, BandMemberName, BandMemberBirthDate),
-	FOREIGN KEY (Band) REFERENCES Band (BandName) ON DELETE CASCADE,
-	FOREIGN KEY (BandMemberName, BandMemberBirthDate) REFERENCES BandMembers (BandMemberName, BirthDate) ON DELETE CASCADE
+	FOREIGN KEY (Band) REFERENCES Band(BandName) ON DELETE CASCADE,
+	FOREIGN KEY (BandMemberName, BandMemberBirthDate) REFERENCES BandMembers(BandMemberName, BirthDate) ON DELETE CASCADE
 );
 
 CREATE TABLE Released_On(
@@ -322,7 +322,7 @@ INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Chris Slade', 301019
 
 INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Freddie Mercury', 05091946);
 
-INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('John Lennon', 09101940); -- guitarist & vocalist (The Beatles)
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('John Lennon', 09101940);
 
 INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Lindsey Buckingham', 03101949);
 
@@ -330,9 +330,9 @@ INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Ben McKee', 07041985
 
 INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
 
-INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Brian Johnson', 05101947); -- vocalist (AC/DC)
+-- INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Brian Johnson', 05101947); -- vocalist (AC/DC)
 
-INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Paul McCartney', 26061979); -- bassist & vocalist (The Beatles)
+-- INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Paul McCartney', 000); -- bassist & vocalist (The Beatles)
 
 
 INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('Freddie Mercury', 05091946);

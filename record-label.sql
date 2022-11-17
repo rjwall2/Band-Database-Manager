@@ -330,20 +330,78 @@ INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Ben McKee', 07041985
 
 INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
 
--- INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Brian Johnson', 05101947); -- vocalist (AC/DC)
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Paul McCartney', 18061942);
 
--- INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Paul McCartney', 000); -- bassist & vocalist (The Beatles)
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Mick Fleetwood', 24061947);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Phil Rudd', 19051954);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Ringo Starr', 07071940);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Daniel Platzman', 28091986);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Brian May', 19071947);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Brent Kutzle', 03081985);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Cliff Williams', 14121949);
+
+INSERT INTO BandMembers(BandMemberName, BirthDate) VALUES ('Christine McVie', 12071943);
 
 
 INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('Freddie Mercury', 05091946);
 
+INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('John Lennon', 09101940);
+
+INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
+
+INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('Paul McCartney', 18061942);
+
+INSERT INTO Vocalist(BandMemberName, BirthDate) VALUES ('Lindsey Buckingham', 03101949);
+
+
 INSERT INTO Drummer(BandMemberName, BirthDate) VALUES ('Chris Slade', 30101946);
+
+INSERT INTO Drummer(BandMemberName, BirthDate) VALUES ('Mick Fleetwood', 24061947);
+
+INSERT INTO Drummer(BandMemberName, BirthDate) VALUES ('Phil Rudd', 19051954);
+
+INSERT INTO Drummer(BandMemberName, BirthDate) VALUES ('Ringo Starr', 07071940);
+
+INSERT INTO Drummer(BandMemberName, BirthDate) VALUES ('Daniel Platzman', 28091986);
+
 
 INSERT INTO Guitarist(BandMemberName, BirthDate) VALUES ('John Lennon', 09101940);
 
+INSERT INTO Guitarist(BandMemberName, BirthDate) VALUES ('Lindsey Buckingham', 03101949);
+
+INSERT INTO Guitarist(BandMemberName, BirthDate) VALUES ('Brian May', 19071947);
+
+INSERT INTO Guitarist(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
+
+INSERT INTO Guitarist(BandMemberName, BirthDate) VALUES ('Daniel Platzman', 28091986);
+
+
 INSERT INTO Bassist(BandMemberName, BirthDate) VALUES ('Ben McKee', 07041985);
 
+INSERT INTO Bassist(BandMemberName, BirthDate) VALUES ('Paul McCartney', 18061942);
+
+INSERT INTO Bassist(BandMemberName, BirthDate) VALUES ('Brent Kutzle', 03081985);
+
+INSERT INTO Bassist(BandMemberName, BirthDate) VALUES ('Cliff Williams', 14121949);
+
+INSERT INTO Bassist(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
+
+
 INSERT INTO Pianist(BandMemberName, BirthDate) VALUES ('Ryan Tedder', 26061979);
+
+INSERT INTO Pianist(BandMemberName, BirthDate) VALUES ('Freddie Mercury', 05091946);
+
+INSERT INTO Pianist(BandMemberName, BirthDate) VALUES ('Ben McKee', 07041985);
+
+INSERT INTO Pianist(BandMemberName, BirthDate) VALUES ('John Lennon', 09101940);
+
+INSERT INTO Pianist(BandMemberName, BirthDate) VALUES ('Christine McVie', 12071943);
 
 
 INSERT INTO Consists_Of(Band, BandMemberName, BandMemberBirthDate) VALUES ('AC/DC', 'Chris Slade', 30101946);

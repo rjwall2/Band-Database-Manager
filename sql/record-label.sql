@@ -279,32 +279,60 @@ INSERT INTO Past_Concerts_2(DatePlayed, Time, Venue, BandPlayed, TicketsSold, Pr
 INSERT INTO Past_Concerts_2(DatePlayed, Time, Venue, BandPlayed, TicketsSold, PricePerTicket) VALUES (08062018, 1800, 'PNE Amphitheater', 'One Republic', 5724, 70);
 
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Highway to Hell', 27071979, 90890023, 'AC/DC');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Highway to Hell', 27071979, 1400000, 'AC/DC');
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('A Night at the Opera', 12121975, 129849085, 'Queen');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Iron Man 2', 19042010, 200000, 'AC/DC');
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Abbey Road', 05071969, 189623765, 'The Beatles');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Back To Black', 25071980, 1000000, 'AC/DC');
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Rumours', 11041977, 8429019, 'Fleetwood Mac');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('A Night at the Opera', 12121975, 9000000, 'Queen');
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Night Visions', 10082012, 52987543, 'Imagine Dragons');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('News of the World', 28101977, 1800000, 'Queen');
 
-INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Waking Up', 15022009, 39546903, 'One Republic');
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Abbey Road', 05071969, 5000000, 'The Beatles');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Revolver', 05081966, 200000, 'The Beatles');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Help!', 06081965, 200000, 'The Beatles');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Rumours', 11041977, 850000, 'Fleetwood Mac');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Tusk', 12101979, 54321, 'Fleetwood Mac');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Night Visions', 10082012, 4000000, 'Imagine Dragons');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Waking Up', 15022009, 300500, 'One Republic');
+
+INSERT INTO Albums(AlbumName, ReleaseDate, TotalSalesRevenue, Band) VALUES ('Human', 27082021, 95000, 'One Republic');
 
 
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Walk All Over You', 27071979, 827300, 'AC/DC', 'Highway to Hell');
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Walk All Over You', 27071979, 180000, 'AC/DC', 'Highway to Hell');
 
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Bohemian Rhapsody', 12121975, 9986831, 'Queen', 'A Night at the Opera');
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Guns For Hire', 19042010, 6000, 'AC/DC', 'Iron Man 2');
 
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Here Comes The Sun', 05071969, 3024365, 'The Beatles', 'Abbey Road');
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Hell Bells', 25071980, 33333, 'AC/DC', 'Back To Black');
 
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('The Chain', 11041977, 102948, 'Fleetwood Mac', 'Rumours');
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Bohemian Rhapsody', 12121975, 7654321, 'Queen', 'A Night at the Opera');
 
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Radioactive', 10082012, 1653112, 'Imagine Dragons', 'Night Visions');
-
-INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Good Life', 15022009, 1186534, 'One Republic', 'Waking Up');
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('We Will Rock You', 28101977, 250000, 'Queen', 'News of the World');
 
 INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Face It Alone', 16081985, 3000, 'Queen', NULL);
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Here Comes The Sun', 05071969, 2222222, 'The Beatles', 'Abbey Road');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Taxman', 05081966, 45000, 'The Beatles', 'Revolver');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Another Girl', 06081965, 27500, 'The Beatles', 'Help!');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('The Chain', 11041977, 111111, 'Fleetwood Mac', 'Rumours');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Storms', 12101979, 4000, 'Fleetwood Mac', 'Tusk');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Radioactive', 10082012, 1650000, 'Imagine Dragons', 'Night Visions');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Good Life', 15022009, 75000, 'One Republic', 'Waking Up');
+
+INSERT INTO Songs(SongName, ReleaseDate, TotalSalesRevenue, Band, Album) VALUES ('Someday', 27082021, 5555, 'One Republic', 'Human');
 
 
 INSERT INTO Streaming_Platform(StreamingPlatformName, RevenuePerStream) VALUES ('Youtube Music', 0.0020);

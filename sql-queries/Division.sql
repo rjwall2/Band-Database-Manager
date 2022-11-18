@@ -1,5 +1,4 @@
---Finds the bands that are on all streaming platforms 
-
+--Finds the bands that are on all streaming platforms
 
 Select BandName
 From Band B

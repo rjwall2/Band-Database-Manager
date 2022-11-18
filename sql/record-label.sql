@@ -419,7 +419,10 @@ INSERT INTO Consists_Of(Band, BandMemberName, BandMemberBirthDate) VALUES ('One 
 
 INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Spotify');
 
-
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Amazon Music');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Apple Music');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'iHeartRadio');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Youtube Music');
 
 INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (700938212, 'Here Comes The Sun', 'The Beatles', 'Apple Music');
 

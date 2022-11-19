@@ -21,6 +21,52 @@
             <input type="submit" value = "Delete" name = "Delete">
         </form>
 
+        <hr />
+
+        <h2 style ="color:green"> Edit Band Information </h2>
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "editBand" name ="editBand">
+            Name of Band to Edit: <input type ="text" name = "editedBand">
+            <input type="submit" value = "Edit" name = "Edit">
+        </form>
+
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "updateQuery" name ="updateQuery">
+            Old Band Name: <input type="text" name="oldName"> <br /><br />
+            New Band Name: <input type="text" name="newName"> <br /><br />
+            Old Charts Rating: <input type="text" name="oldRating"> <br /><br />
+            New Charts Rating: <input type="text" name="newRating"> <br /><br />
+            Old Record Label Name: <input type="text" name="oldLabel"> <br /><br />
+            New Record Label Name: <input type="text" name="newLabel"> <br /><br />
+            <input type="submit" value = "Apply Changes" name = "Apply Changes">
+        </form>
+
+        <hr />
+
+        <h2 style ="color:orange"> Show Concerts That Generated Over X Dollars </h2>
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "selectionQuery" name ="selectionQuery">
+            X: <input type ="text" name = "XAmount">
+            <input type="submit" value = "Search" name = "Search">
+        </form>
+
+        <hr />
+
+        <h2 style ="color:AB7BE5"> Show a Band's Concert History </h2>
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "projectionQuery" name ="projectionQuery">
+            Name of Band: <input type ="text" name = "bandProjected">
+            <input type="submit" value = "Search" name = "Search">
+        </form>
+
+        <hr />
+
+        <h2 style ="color:7BBFE5"> Show Songs that a Band Never Performed in Concert </h2>
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "joinQuery" name ="joinQuery">
+            Name of Band: <input type ="text" name = "bandJoined">
+            <input type="submit" value = "Search" name = "Search">
+        </form>
         
         <hr />
 
@@ -32,5 +78,5 @@
 </html>
 
 
-
+ 
         

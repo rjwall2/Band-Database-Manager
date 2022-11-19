@@ -180,7 +180,7 @@
                     }else if (array_key_exists('editBand', $_POST)){
                         editBand(); 
                     }else if (array_key_exists('selectionQuery', $_POST)){
-                        selectBand();
+                        selectConcerts();
                     }else if (array_key_exists("projectionQuery", $_POST)){
                         concertRevenueSelection();
                     }else if (array_key_exists("joinQuery", $_POST)){
@@ -225,8 +225,25 @@
                 runPlainSQL("UPDATE Band SET BandName =".$newBandName.", ChartsRating =".$newChartsRating.", RecordLabel =".$newRecordLabel." WHERE BandName =".$currentBandName);
                 OCICommit($db_connect_identifier);
             }
+
+            function selectConcerts(){
+                global $db_connect_identifier;
+
+                $concertRevenueThreshold = $_POST['XAmount'];
+                $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket and p1.ConcertRevenue >".$concertRevenueThreshold);
+                
+                echo "<br>Selected Concerts<br>";
+                echo "<table>";
+                echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
+
+                while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
+                }
+
+                echo "</table>";
+            }
     
-            //names of form submits should not have any spaces!!! use _ instead
+            //names of form submits should not have any spaces, use _ instead
             if (isset($_POST['login_submit'])){
                 connect_to_database();
             }else if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {

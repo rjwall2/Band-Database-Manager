@@ -204,6 +204,27 @@
                 OCICommit($db_connect_identifier);
     
             }
+
+            function deleteBand() {
+                global $db_connect_identifier;
+
+                $delete_name = $_POST['deletedBand'];
+
+                runPlainSQL("DELETE FROM Band WHERE BandName =".$delete_name); // dont know if I concatenated variables to strings correctly, be aware during debugging
+                OCICommit($db_connect_identifier);
+            }
+
+            function editBand(){
+                global $db_connect_identifier;
+
+                $currentBandName = $_POST['editedBand'];
+                $newBandName = $_POST['newName'];
+                $newChartsRating = $_POST['newRating'];
+                $newRecordLabel = $_POST['newLabel'];
+
+                runPlainSQL("UPDATE Band SET BandName =".$newBandName.", ChartsRating =".$newChartsRating.", RecordLabel =".$newRecordLabel." WHERE BandName =".$currentBandName);
+                OCICommit($db_connect_identifier);
+            }
     
             //names of form submits should not have any spaces!!! use _ instead
             if (isset($_POST['login_submit'])){

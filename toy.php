@@ -10,7 +10,7 @@
             <input type = "hidden" id="login" name = "login">
             <label> Username: </label> <input type = "text" value ="ora_cwl" name = "username"><br />
             <label> Password:  </label> <input type = "password" name = "password">
-            <input type = "submit" value = "login" name = "login submit">
+            <input type = "submit" value = "login" name = "login_submit">
         </form>
 
         <h2 style ="color:red"> Add a New Band! </h2>

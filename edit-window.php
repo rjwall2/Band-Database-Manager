@@ -14,7 +14,7 @@
             New Charts Rating: <input type="text" name="newRating"> <br /><br />
             Old Record Label Name: <input type="text" name="oldLabel"> <br /><br />
             New Record Label Name: <input type="text" name="newLabel"> <br /><br />
-            <input type="submit" value = "Apply Changes" name = "Apply Changes">
+            <input type="submit" value = "Apply Changes" name = "Apply_Changes">
     </form>
 
     </body>

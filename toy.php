@@ -94,7 +94,7 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $db_connect_identifier = OCIlogon($username, $password, "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_connect_identifier = oci_connect($username, $password, "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_connect_identifier) {
                 alert_messages("Connected to database successfully!");
@@ -166,6 +166,50 @@
                 }
             }
         }
+
+            function POSTRequestRedirect() {
+                global $db_connect_identifier;
+                if ($db_connect_identifier) {
+                    if (array_key_exists('addBand', $_POST)) {
+                        addBand();
+                    } else if (array_key_exists('deleteBand', $_POST)) {
+                        deleteBand();
+                    }else if (array_key_exists('editBand', $_POST)){
+                        editBand(); 
+                    }else if (array_key_exists('selectionQuery', $_POST)){
+                        selectBand();
+                    }else if (array_key_exists("projectionQuery", $_POST)){
+                        concertRevenueSelection();
+                    }else if (array_key_exists("joinQuery", $_POST)){
+                        songsNeverPlayed();
+                    }
+                }
+            }
+    
+            function addBand(){
+                global $db_connect_identifier;
+    
+                $tuple = array (
+                    ":bind1" => $_POST['newBand'],
+                );
+    
+                $alltuples = array (
+                    $tuple
+                );
+    
+                runBoundSQL("insert :bind1", $alltuples);
+                OCICommit($db_connect_identifier);
+    
+            }
+    
+            //names of form submits should not have any spaces!!! use _ instead
+            if (isset($_POST['login_submit'])){
+                connect_to_database();
+            }else if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {
+                POSTRequestRedirect();
+            } else if (isset($_GET['countTupleRequest'])) {
+                GETRequestRedirect();
+            }
 
         ?>
     </body>

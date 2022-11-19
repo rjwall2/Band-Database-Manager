@@ -33,10 +33,13 @@
         <hr />
 
         <h2 style ="color:green"> Edit Band Information </h2>
-        <form method = "POST" action ="edit-window.php" target="_blank">
+        <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "editBand" name ="editBand">
             Name of Band to Edit: <input type ="text" name = "editedBand">
-            <input type="submit" value = "Edit" name = "Edit">
+            New Band Name: <input type="text" name="newName"> <br /><br />
+            New Charts Rating: <input type="text" name="newRating"> <br /><br />
+            New Record Label Name: <input type="text" name="newLabel"> <br /><br />
+            <input type="submit" value = "Apply_Changes" name = "Apply_Changes">
         </form>
 
         <hr />

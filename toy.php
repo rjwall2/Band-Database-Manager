@@ -69,7 +69,7 @@ session_start(); // will allow us to save login information on the server
         <hr />
 
         <h2 style ="color:7BBFE5"> Show Songs that a Band Never Performed in Concert </h2>
-        <form method = "POST" action ="toy.php">
+        <form method = "POST" action = "toy.php">
             <input type = "hidden" id = "joinQuery" name ="joinQuery">
             Name of Band: <input type ="text" name = "bandJoined">
             <input type="submit" value = "Search" name = "Search">
@@ -230,7 +230,7 @@ session_start(); // will allow us to save login information on the server
                 }else if (array_key_exists('selectionQuery', $_POST)){
                     selectConcerts();
                 }else if (array_key_exists("projectionQuery", $_POST)){
-                    concertRevenueSelection();
+                    concertHistory();
                 }else if (array_key_exists("joinQuery", $_POST)){
                     songsNeverPlayed();
                     
@@ -242,7 +242,7 @@ session_start(); // will allow us to save login information on the server
                     bandsHaving();
                 }else if (array_key_exists("groupByAggregateQuery", $_POST)) {
                     groupByAggregate();
-                }else {
+                } else {
                     alert_messages("function not found");
                 }
             }else{
@@ -319,6 +319,42 @@ session_start(); // will allow us to save login information on the server
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td><td>".$row[4]."</td></tr>"; 
             }
 
+            echo "</table>";
+        }
+
+        function concertHistory(){
+
+            $bandName = $_POST['bandProjected'];
+            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p2.BandPlayed = '".$bandName."' ");
+       
+      
+            echo "<br>Past Concerts<br>";
+            echo "<table>";
+            echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
+
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td></tr>"; 
+            }
+
+            echo "</table>";
+        }
+        
+
+        function songsNeverPlayed(){
+
+            $bandName = $_POST['bandJoined'];
+            $results = runPlainSQL("SELECT s1.SongName
+            FROM Songs s1
+            WHERE (s1.Band =  ".$bandName." and s1.SongName 
+                NOT IN 
+                (SELECT s2.SongName FROM Songs s2, Played_At pa WHERE pa.BandName = s2.Band and pa.SongName = s2.SongName)) ");  
+            echo "<br>Songs that a band has never played in a concert<br>";
+            echo "<table>";
+            echo "<tr><th>SONGNAME</th></tr>";
+            
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] ."</td></tr>"; 
+            }
             echo "</table>";
         }
 

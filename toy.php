@@ -233,6 +233,9 @@ session_start(); // will allow us to save login information on the server
                     concertRevenueSelection();
                 }else if (array_key_exists("joinQuery", $_POST)){
                     songsNeverPlayed();
+                    
+                }else if (array_key_exists("divisionQuery", $_POST)) {
+                    bandsOnAllStreamingPlatforms(); 
                 }else {
                     alert_messages("function not found");
                 }
@@ -312,7 +315,29 @@ session_start(); // will allow us to save login information on the server
 
             echo "</table>";
         }
-    
+
+        function bandsOnAllStreamingPlatforms(){
+
+            $results = runPlainSQL("SELECT BandName
+            FROM Band B 
+            WHERE NOT EXISTS(
+               SELECT S.StreamingPlatformName
+               FROM Streaming_Platform S
+               Minus
+                   SELECT r.StreamingPlatform
+                   FROM Released_On r
+                   WHERE r.BandName = B.BandName)");
+                
+            echo "<br>Bands that streamed on all platforms:<br>";
+            echo "<table>";
+            echo "<tr><th>BandName</th></tr>";
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] ."</td></tr>"; 
+            }
+
+            echo "</table>";
+        }
+        
         //names of form submits should not have any spaces, use _ instead
         if (isset($_POST['login_submit'])){
             connect_to_database();

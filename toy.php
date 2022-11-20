@@ -241,15 +241,17 @@ session_start(); // will allow us to save login information on the server
         function addBand(){
             global $current_db_identifier;
     
-            $tuple = array (
-                ":bind1" => $_POST['newBand'],
-            );
+            // $tuple = array (
+            //     ":bind1" => $_POST['newBand'],
+            // );
     
-            $alltuples = array (
-                $tuple
-            );
+            // $alltuples = array (
+            //     $tuple
+            // );
     
-            $success = runBoundSQL("insert into Band values (:bind1)", $alltuples);
+            $newBand = $_POST['newBand'];
+
+            $success = runPlainSQL("INSERT INTO Band (BandName) VALUES ('".$newBand."')");
             if($success){
                 oci_commit($current_db_identifier);
                 alert_messages("added to database");

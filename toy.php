@@ -236,6 +236,8 @@ session_start(); // will allow us to save login information on the server
                     
                 }else if (array_key_exists("divisionQuery", $_POST)) {
                     bandsOnAllStreamingPlatforms(); 
+                }else if (array_key_exists("nestedGroupByAggregateQuery", $_POST)) {
+                    nestedGroupByAggregate();
                 }else {
                     alert_messages("function not found");
                 }
@@ -315,6 +317,25 @@ session_start(); // will allow us to save login information on the server
 
             echo "</table>";
         }
+
+        function nestedGroupByAggregate(){
+
+            $results = runPlainSQL("SELECT Band, SUM(TotalSalesRevenue)
+            FROM        Albums
+            GROUP BY    Band
+            HAVING      (SUM(TotalSalesRevenue)) > (SELECT AVG(TotalSalesRevenue)
+                                                    FROM Albums)");
+                
+            echo "<br>Total Sales revenus of albums for each band where total revenue > average sales revenue across all band albums:<br>";
+            echo "<table>";
+            echo "<tr><th>Band</th><th>SUM(TOTALSALESREVENUE)</tr>";
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] ."</td><td>" . $row[1] . "</td></tr>"; 
+            }
+
+            echo "</table>";
+        }
+        
 
         function bandsOnAllStreamingPlatforms(){
 

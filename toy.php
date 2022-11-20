@@ -7,117 +7,136 @@ session_start(); // will allow us to save login information on the server
 <html>
     <head> 
         <title> Band Management System </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <style>
+        <?php include 'style.css'; ?>
+        </style>
     </head>
-    
+
     <body>
+    
+    <header class="main">
+            <h1> Band Management System </h1>
+    </header>
 
-    <h2 style ="color:green"> Please Login to DataBase </h2>
-        <form method = "POST" action = "toy.php">
-            <input type = "hidden" id="login" name = "login">
-            <label> Username: </label> <input type = "text" value ="ora_cwl" name = "username"><br />
-            <label> Password:  </label> <input type = "password" name = "password">
-            <input type = "submit" value = "login" name = "login_submit">
-        </form>
+        <h2> Please Login to Database </h2>
+            <form method = "POST" action = "toy.php">
+                <input type = "hidden" id="login" name = "login">
+                <label> Username: </label> 
+                    <input type = "text" value ="ora_cwl" name = "username"><br />
+                <label> Password:  </label> 
+                    <input type = "password" name = "password">
+                <input id="submit" type = "submit" value = "Login" name = "login_submit">
+            </form>
 
-        <h2 style ="color:red"> Add a New Band! </h2>
+        <h2> Add a New Band </h2>
         <!-- <p style="color:blue; font-size:15px;"> Add a band by specifying their name </p> -->
         <form method = "POST" action = "toy.php">
             <input type="hidden" id="addBand" name="addBand">
-            <label> New Band's Name: </label> <input type="text" value="type here", name="newBand"> <!-- the "NewBandName:" is not needed, name is used for identification --> 
-            <input type="submit" value="Add" name="Add"> 
+            <label> New Band's Name: </label> 
+                <input type="text" name="newBand"> <!-- the "NewBandName:" is not needed, name is used for identification --> 
+            <input id="submit" type="submit" value="Add" name="Add"> 
         </form>
         
         <hr />
 
-        <h2 style ="color:blue"> Delete a Band </h2>
+        <h2> Delete a Band </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "deleteBand" name ="deleteBand">
-            Name of Band to Delete: <input type ="text" value ="type here", name = "deletedBand">
-            <input type="submit" value = "Delete" name = "Delete">
+            <label> Name of Band to Delete: </label>
+                <input type ="text" name = "deletedBand">
+            <input id="submit" type="submit" value = "Delete" name = "Delete">
         </form>
 
         <hr />
 
-        <h2 style ="color:green"> Edit Band Information </h2>
+        <h2> Edit Band Information </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "editBand" name ="editBand">
-            Name of Band to Edit: <input type ="text" name = "editedBand">
-            New Band Name: <input type="text" name="newName"> <br /><br />
-            New Charts Rating: <input type="text" name="newRating"> <br /><br />
-            New Record Label Name: <input type="text" name="newLabel"> <br /><br />
-            <input type="submit" value = "Apply_Changes" name = "Apply_Changes">
+            <label> Name of Band to Edit: </label>
+                <input type ="text" name = "editedBand">
+            &nbsp;&nbsp;
+            <label> New Band Name: </label>
+                <input type="text" name="newName"> <br /><br />
+            <label> New Charts Rating: </label>
+                <input type="text" name="newRating"> <br /><br />
+            <label> New Record Label Name: </label>
+                <input type="text" name="newLabel"> <br /><br />
+            <input id="submit" type="submit" value = "Apply Changes" name = "Apply_Changes">
         </form>
 
         <hr />
 
-        <h2 style ="color:orange"> Show Concerts That Generated Over X Dollars </h2>
+        <h2> Show Concerts That Generated Over X Dollars </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "selectionQuery" name ="selectionQuery">
-            X: <input type ="text" name = "XAmount">
-            <input type="submit" value = "Search" name = "Search">
+            <label> X: </label>
+                <input type ="text" name = "XAmount">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
         <hr />
 
-        <h2 style ="color:AB7BE5"> Show a Band's Concert History </h2>
+        <h2> Show a Band's Concert History </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "projectionQuery" name ="projectionQuery">
-            Name of Band: <input type ="text" name = "bandProjected">
-            <input type="submit" value = "Search" name = "Search">
+            <label> Name of Band: </label>
+                <input type ="text" name = "bandProjected">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
         <hr />
 
-        <h2 style ="color:7BBFE5"> Show Songs that a Band Never Performed in Concert </h2>
+        <h2> Show Songs that a Band Never Performed in Concert </h2>
         <form method = "POST" action = "toy.php">
             <input type = "hidden" id = "joinQuery" name ="joinQuery">
-            Name of Band: <input type ="text" name = "bandJoined">
-            <input type="submit" value = "Search" name = "Search">
+            <label> Name of Band: </label>
+                <input type ="text" name = "bandJoined">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
         <hr />
         
-        <h2 style ="color:5C4033"> Show Revenue of Every Band's Top Grossing Album or Top Grossing Song </h2>
+        <h2> Show Revenue of Every Band's Top Grossing Album or Top Grossing Song </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "groupByAggregateQuery" name ="groupByAggregateQuery">
             <input type="radio" id = "Song" value = "Songs" name = "groupbyButton">
             <label for = "Song" > Songs </label><br>
             <input type="radio" id = "Albums" value = "Albums" name = "groupbyButton">
             <label for = "Albums" > Albums </label><br><br>
-            <input type="submit" value = "Search" name = "Search">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
         
         <hr />
 
-        <h2 style ="color:301934"> Bands That Have Earned More than Y Dollars From Total Concert Revenue  </h2>
+        <h2> Bands That Have Earned More than Y Dollars From Total Concert Revenue  </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery">
-            Y: <input type ="text" name = "YAmount">
-            <input type="submit" value = "Search" name = "Search">
+            <label> Y: </label>
+                <input type ="text" name = "YAmount">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
         <hr />
 
-        <h2 style ="color:FFD700"> Cool Search 1: Find the total sales revenue of albums for each band where the total sales revenue is greater than the average sales revenue across all band albums  </h2>
-        <form method = "POST" action ="toy.php">
+        <h2> Cool Search 1: Find the total sales revenue of albums for each band where the total sales revenue is greater than the average sales revenue across all band albums  </h2>
+        <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
             <input type = "hidden" id = "nestedGroupByAggregateQuery" name ="nestedGroupByAggregateQuery">
-            <input type="submit" value = "Search" name = "Search">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
         <hr />
 
-        <h2 style ="color:58f13c"> Cool Search 2: Find the bands that stream on all streaming platforms  </h2>
-        <form method = "POST" action ="toy.php">
+        <h2> Cool Search 2: Find the bands that stream on all streaming platforms  </h2>
+        <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
             <input type = "hidden" id = "divisionQuery" name ="divisionQuery">
-            <input type="submit" value = "Search" name = "Search">
+            <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
         
-        <!-- <hr />
+        <hr />
 
-        <form method ="POST" action = "suprise.php" target="_blank">
-            <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-            <input type="submit" value="suprise" id ="suprise" name="suprise">
-        </form> -->
 
         <?php
         // now doing php

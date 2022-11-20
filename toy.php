@@ -87,7 +87,7 @@ session_start(); // will allow us to save login information on the server
         
         <hr />
 
-        <h2 style ="color:301934"> Bands that have earned Y Dollars from total concert revenue  </h2>
+        <h2 style ="color:301934"> Bands that have earned more than Y Dollars from total concert revenue  </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery">
             Y: <input type ="text" name = "YAmount">
@@ -238,6 +238,8 @@ session_start(); // will allow us to save login information on the server
                     bandsOnAllStreamingPlatforms(); 
                 }else if (array_key_exists("nestedGroupByAggregateQuery", $_POST)) {
                     nestedGroupByAggregate();
+                }else if (array_key_exists("havingAggregateQuery", $_POST)) {
+                    bandsHaving();
                 }else {
                     alert_messages("function not found");
                 }
@@ -317,6 +319,27 @@ session_start(); // will allow us to save login information on the server
 
             echo "</table>";
         }
+
+        function bandsHaving(){
+
+            $totalconcertRevenueThreshold = $_POST['YAmount'];
+            $results = runPlainSQL("SELECT BandPlayed, SUM(ConcertRevenue)
+            FROM Past_Concerts_1 pc1, Past_Concerts_2 pc2
+            WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket
+            GROUP BY pc2.BandPlayed
+            HAVING SUM(ConcertRevenue) >".$totalconcertRevenueThreshold);
+                
+            echo "<br>Selected Bands<br>";
+            echo "<table>";
+            echo "<tr><th>BANDPlayed</th><th>SUM(CONCERTREVENUE)</th></tr>";
+
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
+            }
+
+            echo "</table>";
+        }
+
 
         function nestedGroupByAggregate(){
 

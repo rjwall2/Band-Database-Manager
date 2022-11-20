@@ -345,9 +345,15 @@ session_start(); // will allow us to save login information on the server
             $bandName = $_POST['bandJoined'];
             $results = runPlainSQL("SELECT s1.SongName
             FROM Songs s1
-            WHERE (s1.Band =  ".$bandName." and s1.SongName 
+            WHERE (s1.Band = '".$bandName."' and s1.SongName 
                 NOT IN 
-                (SELECT s2.SongName FROM Songs s2, Played_At pa WHERE pa.BandName = s2.Band and pa.SongName = s2.SongName)) ");  
+                (SELECT s2.SongName FROM Songs s2, Played_At pa WHERE pa.BandName = s2.Band and pa.SongName = s2.SongName))");  
+            if($results['executionstatus']){
+                alert_messages("join success");
+            }else{
+                alert_messages("join fail");
+            }
+
             echo "<br>Songs that a band has never played in a concert<br>";
             echo "<table>";
             echo "<tr><th>SONGNAME</th></tr>";
@@ -357,6 +363,7 @@ session_start(); // will allow us to save login information on the server
             }
             echo "</table>";
         }
+
 
         function groupByAggregate(){
 

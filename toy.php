@@ -254,9 +254,9 @@ session_start(); // will allow us to save login information on the server
             $success = runPlainSQL("INSERT INTO Band (BandName) VALUES ('".$newBand."')");
             if($success){
                 oci_commit($current_db_identifier);
-                alert_messages("added to database");
+                alert_messages("added ".$newBand." to database");
             }else{
-                alert_messages("could not add to database");
+                alert_messages("Could not add to database");
             }
     
         }

@@ -78,10 +78,10 @@ session_start(); // will allow us to save login information on the server
         <h2 style ="color:5C4033"> Show every bands top grossing album, or top grossing song </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "groupByAggregateQuery" name ="groupByAggregateQuery">
-            <input type="radio" id = "Songs" value = "Songs" name = "groupbyButton">
-            <label for = "Songs" > Songs </label><br>
-            <input type="radio" id = "Bands" value = "Bands" name = "groupbyButton">
-            <label for = "Bands" > Bands </label><br><br>
+            <input type="radio" id = "Song" value = "Songs" name = "groupbyButton">
+            <label for = "Song" > Songs </label><br>
+            <input type="radio" id = "Albums" value = "Albums" name = "groupbyButton">
+            <label for = "Albums" > Albums </label><br><br>
             <input type="submit" value = "Search" name = "Search">
         </form>
         
@@ -240,6 +240,8 @@ session_start(); // will allow us to save login information on the server
                     nestedGroupByAggregate();
                 }else if (array_key_exists("havingAggregateQuery", $_POST)) {
                     bandsHaving();
+                }else if (array_key_exists("groupByAggregateQuery", $_POST)) {
+                    groupByAggregate();
                 }else {
                     alert_messages("function not found");
                 }
@@ -318,6 +320,42 @@ session_start(); // will allow us to save login information on the server
             }
 
             echo "</table>";
+        }
+
+        function groupByAggregate(){
+
+            $radioValue = $_POST["groupbyButton"];
+
+            if($radioValue == "Albums") {
+                $results = runPlainSQL("SELECT Band, MAX(TotalSalesRevenue) FROM Albums GROUP BY Band");
+
+                echo "<br>Every bands top grossing album<br>";
+                echo "<table>";
+                echo "<tr><th>Band</th><th>MAX(TOTALSALESREVENUE)</th></tr>";
+
+                while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
+                }
+
+                echo "</table>";
+            }else {
+                $results = runPlainSQL("SELECT Band, MAX(TotalSalesRevenue)
+                FROM Songs
+                GROUP BY Band");
+                //echo "$radioVal"
+                echo "<br>Every bands top grossing song<br>";
+                echo "<table>";
+                echo "<tr><th>Band</th><th>MAX(TOTALSALESREVENUE)</th></tr>";
+
+                while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
+                }
+
+                echo "</table>";
+            }
+            
+                
+            
         }
 
         function bandsHaving(){

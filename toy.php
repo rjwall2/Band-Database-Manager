@@ -74,8 +74,10 @@ session_start(); // will allow us to save login information on the server
             Name of Band: <input type ="text" name = "bandJoined">
             <input type="submit" value = "Search" name = "Search">
         </form>
+
+        <hr />
         
-        <h2 style ="color:5C4033"> Show every bands top grossing album, or top grossing song </h2>
+        <h2 style ="color:5C4033"> Show Revenue of Every Band's Top Grossing Album or Top Grossing Song </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "groupByAggregateQuery" name ="groupByAggregateQuery">
             <input type="radio" id = "Song" value = "Songs" name = "groupbyButton">
@@ -87,7 +89,7 @@ session_start(); // will allow us to save login information on the server
         
         <hr />
 
-        <h2 style ="color:301934"> Bands that have earned more than Y Dollars from total concert revenue  </h2>
+        <h2 style ="color:301934"> Bands That Have Earned More than Y Dollars From Total Concert Revenue  </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery">
             Y: <input type ="text" name = "YAmount">
@@ -110,12 +112,12 @@ session_start(); // will allow us to save login information on the server
             <input type="submit" value = "Search" name = "Search">
         </form>
         
-        <hr />
+        <!-- <hr />
 
         <form method ="POST" action = "suprise.php" target="_blank">
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <input type="submit" value="suprise" id ="suprise" name="suprise">
-        </form>
+        </form> -->
 
         <?php
         // now doing php
@@ -233,7 +235,6 @@ session_start(); // will allow us to save login information on the server
                     concertHistory();
                 }else if (array_key_exists("joinQuery", $_POST)){
                     songsNeverPlayed();
-                    
                 }else if (array_key_exists("divisionQuery", $_POST)) {
                     bandsOnAllStreamingPlatforms(); 
                 }else if (array_key_exists("nestedGroupByAggregateQuery", $_POST)) {
@@ -397,8 +398,6 @@ session_start(); // will allow us to save login information on the server
                 echo "</table>";
             }
             
-                
-            
         }
 
         function bandsHaving(){
@@ -472,8 +471,6 @@ session_start(); // will allow us to save login information on the server
 
         if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {
             POSTRequestRedirect();
-        } else if (isset($_GET['countTupleRequest'])) {
-            GETRequestRedirect();
         }
 
         ?>

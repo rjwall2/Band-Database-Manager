@@ -284,21 +284,26 @@ session_start(); // will allow us to save login information on the server
             $newChartsRating = $_POST['newRating'];
             $newRecordLabel = $_POST['newLabel'];
 
-            runPlainSQL("UPDATE Band SET BandName =".$newBandName.", ChartsRating =".$newChartsRating.", RecordLabel =".$newRecordLabel." WHERE BandName =".$currentBandName);
-            OCICommit($current_db_identifier);
+            $success = runPlainSQL("UPDATE Band SET BandName ='".$newBandName."', ChartsRating ='".$newChartsRating."', RecordLabel ='".$newRecordLabel."' WHERE BandName ='".$currentBandName. "'");
+            if ($success){
+                oci_commit($current_db_identifier);
+                alert_messages("edit successful");
+            } else {
+                alert_messages("edit unsuccessful");
+            }
         }
 
         function selectConcerts(){
 
             $concertRevenueThreshold = $_POST['XAmount'];
-            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket and p1.ConcertRevenue >".$concertRevenueThreshold);
+            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > '".$concertRevenueThreshold."'");
                 
             echo "<br>Selected Concerts<br>";
             echo "<table>";
             echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
 
             while ($row = OCI_Fetch_Array($results, OCI_BOTH)) {
-            echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
+                echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
             }
 
             echo "</table>";

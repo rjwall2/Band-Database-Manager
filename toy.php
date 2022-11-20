@@ -177,7 +177,11 @@ session_start(); // will allow us to save login information on the server
                 echo htmlentities($error['message']);
             }
 
-            return $SQLexecution;
+            $results = array (
+                'executionstatus' => $SQLexecution,
+                'parsed' => $SQLcommandparsed
+            );
+            return $results;
         }
 
         //runs bound sql statements, use for adding tuples
@@ -252,7 +256,7 @@ session_start(); // will allow us to save login information on the server
             $newBand = $_POST['newBand'];
 
             $success = runPlainSQL("INSERT INTO Band (BandName) VALUES ('".$newBand."')");
-            if($success){
+            if($success['executionstatus']){
                 oci_commit($current_db_identifier);
                 alert_messages("added ".$newBand." to database");
             }else{
@@ -268,7 +272,7 @@ session_start(); // will allow us to save login information on the server
             $delete_name = $_POST['deletedBand'];
 
             $success = runPlainSQL("DELETE FROM Band WHERE BandName = '" . $delete_name . "'");
-            if ($success){
+            if ($success['executionstatus']){
                 oci_commit($current_db_identifier);
                 alert_messages("successfully removed ".$delete_name." from the database");
             } else {
@@ -285,7 +289,7 @@ session_start(); // will allow us to save login information on the server
             $newRecordLabel = $_POST['newLabel'];
 
             $success = runPlainSQL("UPDATE Band SET BandName ='".$newBandName."', ChartsRating ='".$newChartsRating."', RecordLabel ='".$newRecordLabel."' WHERE BandName ='".$currentBandName. "'");
-            if ($success){
+            if ($success['executionstatus']){
                 oci_commit($current_db_identifier);
                 alert_messages("edit successful");
             } else {
@@ -296,14 +300,14 @@ session_start(); // will allow us to save login information on the server
         function selectConcerts(){
 
             $concertRevenueThreshold = $_POST['XAmount'];
-            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > '".$concertRevenueThreshold."'");
+            $results = runPlainSQL("SELECT p2.DatePlayed, p2.BandPlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > ". $concertRevenueThreshold);
                 
             echo "<br>Selected Concerts<br>";
             echo "<table>";
-            echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
+            echo "<tr><th>DatePlayed</th><th>BandPlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
 
-            while ($row = OCI_Fetch_Array($results, OCI_BOTH)) {
-                echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td><td>".$row[4]."</td></tr>"; 
             }
 
             echo "</table>";

@@ -181,7 +181,7 @@ session_start(); // will allow us to save login information on the server
         }
 
         //runs bound sql statements, use for adding tuples
-        function executeBoundSQL($SQLcommand, $list) {
+        function runBoundSQL($SQLcommand, $list) {
 
 			global $current_db_identifier;
 
@@ -214,101 +214,106 @@ session_start(); // will allow us to save login information on the server
             }
         }
 
-            function POSTRequestRedirect() {
-                global $current_db_identifier;
-                if ($current_db_identifier) {
-                    if (array_key_exists('addBand', $_POST)) {
-                        addBand();
-                    } else if (array_key_exists('deleteBand', $_POST)) {
-                        deleteBand();
-                    }else if (array_key_exists('editBand', $_POST)){
-                        editBand(); 
-                    }else if (array_key_exists('selectionQuery', $_POST)){
-                        selectConcerts();
-                    }else if (array_key_exists("projectionQuery", $_POST)){
-                        concertRevenueSelection();
-                    }else if (array_key_exists("joinQuery", $_POST)){
-                        songsNeverPlayed();
-                    }else {
-                        alert_messages("function not found");
-                    }
-                }else{
-                    alert_messages("not connected to a database yet");
+        function POSTRequestRedirect() {
+            global $current_db_identifier;
+            if ($current_db_identifier) {
+                if (array_key_exists('addBand', $_POST)) {
+                    addBand();
+                } else if (array_key_exists('deleteBand', $_POST)) {
+                    deleteBand();
+                }else if (array_key_exists('editBand', $_POST)){
+                    editBand(); 
+                }else if (array_key_exists('selectionQuery', $_POST)){
+                    selectConcerts();
+                }else if (array_key_exists("projectionQuery", $_POST)){
+                    concertRevenueSelection();
+                }else if (array_key_exists("joinQuery", $_POST)){
+                    songsNeverPlayed();
+                }else {
+                    alert_messages("function not found");
                 }
+            }else{
+                alert_messages("not connected to a database yet");
+            }
                 
+        }
+    
+        function addBand(){
+            global $current_db_identifier;
+    
+            $tuple = array (
+                ":bind1" => $_POST['newBand'],
+            );
+    
+            $alltuples = array (
+                $tuple
+            );
+    
+            $success = runBoundSQL("insert into Band values (:bind1)", $alltuples);
+            if($success){
+                oci_commit($current_db_identifier);
+                alert_messages("added to database");
+            }else{
+                alert_messages("could not add to database");
             }
     
-            function addBand(){
-                global $current_db_identifier;
-    
-                $tuple = array (
-                    ":bind1" => $_POST['newBand'],
-                );
-    
-                $alltuples = array (
-                    $tuple
-                );
-    
-                runBoundSQL("insert :bind1", $alltuples);
-                OCICommit($current_db_identifier);
-    
-            }
+        }
 
             
-            function deleteBand() {
-                global $current_db_identifier;
+        function deleteBand() {
+            global $current_db_identifier;
 
-                $delete_name = $_POST['deletedBand'];
+            $delete_name = $_POST['deletedBand'];
 
-                $success = runPlainSQL("DELETE FROM Band WHERE BandName = '" . $delete_name . "'");
-                if ($success){
-                    oci_commit($current_db_identifier);
-                    alert_messages("successfully removed ".$delete_name." from the database");
-                } else {
-                    alert_messages("Could not remove ".$delete_name." from the database");
-                }
+            $success = runPlainSQL("DELETE FROM Band WHERE BandName = '" . $delete_name . "'");
+            if ($success){
+                oci_commit($current_db_identifier);
+                alert_messages("successfully removed ".$delete_name." from the database");
+            } else {
+                alert_messages("Could not remove ".$delete_name." from the database");
             }
+        }
 
-            function editBand(){
-                global $current_db_identifier;
+        function editBand(){
+            global $current_db_identifier;
 
-                $currentBandName = $_POST['editedBand'];
-                $newBandName = $_POST['newName'];
-                $newChartsRating = $_POST['newRating'];
-                $newRecordLabel = $_POST['newLabel'];
+            $currentBandName = $_POST['editedBand'];
+            $newBandName = $_POST['newName'];
+            $newChartsRating = $_POST['newRating'];
+            $newRecordLabel = $_POST['newLabel'];
 
-                runPlainSQL("UPDATE Band SET BandName =".$newBandName.", ChartsRating =".$newChartsRating.", RecordLabel =".$newRecordLabel." WHERE BandName =".$currentBandName);
-                OCICommit($current_db_identifier);
-            }
+            runPlainSQL("UPDATE Band SET BandName =".$newBandName.", ChartsRating =".$newChartsRating.", RecordLabel =".$newRecordLabel." WHERE BandName =".$currentBandName);
+            OCICommit($current_db_identifier);
+        }
 
-            function selectConcerts(){
+        function selectConcerts(){
 
-                $concertRevenueThreshold = $_POST['XAmount'];
-                $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket and p1.ConcertRevenue >".$concertRevenueThreshold);
+            $concertRevenueThreshold = $_POST['XAmount'];
+            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket and p1.ConcertRevenue >".$concertRevenueThreshold);
                 
-                echo "<br>Selected Concerts<br>";
-                echo "<table>";
-                echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
+            echo "<br>Selected Concerts<br>";
+            echo "<table>";
+            echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
 
-                while ($row = OCI_Fetch_Array($results, OCI_BOTH)) {
-                echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
-                }
-
-                echo "</table>";
+            while ($row = OCI_Fetch_Array($results, OCI_BOTH)) {
+            echo "<tr><td>" . $row["p2.DatePlayed"] . "</td><td>" . $row["p2.Venue"] . "</td><td>" . $row["p1.TicketsSold"] ."</td><td>" . $row["p1.ConcertRevenue"] ."</td></tr>"; 
             }
+
+            echo "</table>";
+        }
     
-            //names of form submits should not have any spaces, use _ instead
-            if (isset($_POST['login_submit'])){
-                connect_to_database();
-            }
+        //names of form submits should not have any spaces, use _ instead
+        if (isset($_POST['login_submit'])){
+            connect_to_database();
+        }
             
-            $current_db_identifier = oci_connect($_SESSION['username'], $_SESSION['password'], "dbhost.students.cs.ubc.ca:1522/stu");
+        $current_db_identifier = oci_connect($_SESSION['username'], $_SESSION['password'], "dbhost.students.cs.ubc.ca:1522/stu");
 
-            if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {
-                POSTRequestRedirect();
-            } else if (isset($_GET['countTupleRequest'])) {
-                GETRequestRedirect();
-            }
+        if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {
+            POSTRequestRedirect();
+        } else if (isset($_GET['countTupleRequest'])) {
+            GETRequestRedirect();
+        }
 
         ?>
     </body>

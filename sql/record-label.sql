@@ -69,7 +69,7 @@ CREATE TABLE Past_Concerts_2 (
 	TicketsSold INTEGER,
 	PricePerTicket INTEGER,
 	PRIMARY KEY (DatePlayed, Time, Venue),
-	FOREIGN KEY (BandPlayed) REFERENCES Band(BandName),
+	FOREIGN KEY (BandPlayed) REFERENCES Band(BandName) ON DELETE CASCADE,
 	FOREIGN KEY (TicketsSold, PricePerTicket) REFERENCES Past_Concerts_1(TicketsSold, PricePerTicket) ON DELETE CASCADE
 );
 

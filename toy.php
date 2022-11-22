@@ -36,17 +36,19 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action = "toy.php">
             <input type="hidden" id="addBand" name="addBand">
             <label> New Band's Name: </label> 
-                <input type="text" name="newBand"> <!-- the "NewBandName:" is not needed, name is used for identification --> 
+                <input type="text" name="newBand" required> <!-- the "NewBandName:" is not needed, name is used for identification --> 
             <input id="submit" type="submit" value="Add" name="Add"> 
         </form>
         
         <hr />
 
         <h2> Delete a Band </h2>
+        <!-- FOR DEMO OF FIRST INSERT, DELETE, AND EDIT QUERIES -->
+        <!-- can be removed if not needed -->
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "deleteBand" name ="deleteBand">
             <label> Name of Band to Delete: </label>
-                <input type ="text" name = "deletedBand">
+                <input type ="text" name = "deletedBand" required>
             <input id="submit" type="submit" value = "Delete" name = "Delete">
         </form>
 
@@ -56,15 +58,30 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "editBand" name ="editBand">
             <label> Name of Band to Edit: </label>
-                <input type ="text" name = "editedBand">
+                <input type ="text" name = "editedBand" required>
             &nbsp;&nbsp;
             <label> New Band Name: </label>
-                <input type="text" name="newName"> <br /><br />
+                <input type="text" name="newName" required> <br /><br />
             <label> New Charts Rating: </label>
                 <input type="text" name="newRating"> <br /><br />
-            <label> New Record Label Name: </label>
-                <input type="text" name="newLabel"> <br /><br />
+            <label for="newLabel">New Record Label Name:</label>
+            <select name="newLabel" id="labelButton" required>
+                <option value="">Please select an option.</option>
+                <option value="Atlantic Records">Altlantic Records</option>
+                <option value="EMI">EMI</option>
+                <option value="Apple Records">Apple Records</option>
+                <option value="Warner Records">Warner Records</option>
+                <option value="Interscope Records">Interscope Records</option>
+            </select>
             <input id="submit" type="submit" value = "Apply Changes" name = "Apply_Changes">
+        </form>
+
+        <hr />
+
+        <h2> Display Bands </h2>
+        <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
+            <input type = "hidden" id = "displayBands" name ="displayBands">
+            <input id="submit" type="submit" value = "Display" name = "Display">
         </form>
 
         <hr />
@@ -121,7 +138,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "projectionQuery" name ="projectionQuery">
             <label> Name of Band: </label>
-                <input type ="text" name = "bandProjected">
+                <input type ="text" name = "bandProjected" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -131,7 +148,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action = "toy.php">
             <input type = "hidden" id = "joinQuery" name ="joinQuery">
             <label> Name of Band: </label>
-                <input type ="text" name = "bandJoined">
+                <input type ="text" name = "bandJoined" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -140,7 +157,7 @@ session_start(); // will allow us to save login information on the server
         <h2> Show Revenue of Every Band's Top Grossing Album or Top Grossing Song </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "groupByAggregateQuery" name ="groupByAggregateQuery">
-            <input type="radio" id = "Song" value = "Songs" name = "groupbyButton">
+            <input type="radio" id = "Song" value = "Songs" name = "groupbyButton" required>
             <label for = "Song" > Songs </label><br>
             <input type="radio" id = "Albums" value = "Albums" name = "groupbyButton">
             <label for = "Albums" > Albums </label><br><br>
@@ -151,9 +168,9 @@ session_start(); // will allow us to save login information on the server
 
         <h2> Bands That Have Earned More than Y Dollars From Total Concert Revenue  </h2>
         <form method = "POST" action ="toy.php">
-            <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery">
+            <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery" required>
             <label> Y: </label>
-                <input type ="text" name = "YAmount">
+                <input type ="text" name = "YAmount" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -284,21 +301,23 @@ session_start(); // will allow us to save login information on the server
                     addBand();
                 } else if (array_key_exists('deleteBand', $_POST)) {
                     deleteBand();
-                }else if (array_key_exists('editBand', $_POST)){
+                } else if (array_key_exists('editBand', $_POST)){
                     editBand(); 
-                }else if (array_key_exists('selectionQuery', $_POST)){
+                } else if (array_key_exists('displayBands', $_POST)){
+                    displayBands();
+                } else if (array_key_exists('selectionQuery', $_POST)){
                     selectConcerts();
-                }else if (array_key_exists("projectionQuery", $_POST)){
+                } else if (array_key_exists("projectionQuery", $_POST)){
                     concertHistory();
-                }else if (array_key_exists("joinQuery", $_POST)){
+                } else if (array_key_exists("joinQuery", $_POST)){
                     songsNeverPlayed();
-                }else if (array_key_exists("divisionQuery", $_POST)) {
+                } else if (array_key_exists("divisionQuery", $_POST)) {
                     bandsOnAllStreamingPlatforms(); 
-                }else if (array_key_exists("nestedGroupByAggregateQuery", $_POST)) {
+                } else if (array_key_exists("nestedGroupByAggregateQuery", $_POST)) {
                     nestedGroupByAggregate();
-                }else if (array_key_exists("havingAggregateQuery", $_POST)) {
+                } else if (array_key_exists("havingAggregateQuery", $_POST)) {
                     bandsHaving();
-                }else if (array_key_exists("groupByAggregateQuery", $_POST)) {
+                } else if (array_key_exists("groupByAggregateQuery", $_POST)) {
                     groupByAggregate();
                 } else {
                     alert_messages("function not found");
@@ -331,7 +350,6 @@ session_start(); // will allow us to save login information on the server
             }
     
         }
-
             
         function deleteBand() {
             global $current_db_identifier;
@@ -362,6 +380,21 @@ session_start(); // will allow us to save login information on the server
             } else {
                 alert_messages("edit unsuccessful");
             }
+        }
+
+        function displayBands(){
+
+            $results = runPlainSQL("SELECT * FROM Band");
+       
+            echo "<br>Retrieved Data:<br><br>";
+            echo "<table>";
+            echo "<tr><th>BandName</th><th>ChartsRating</th><th>RecordLabel</th></tr>";
+
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td></tr>"; 
+            }
+
+            echo "</table>";
         }
 
         function selectConcerts(){
@@ -555,7 +588,7 @@ session_start(); // will allow us to save login information on the server
             
         $current_db_identifier = oci_connect($_SESSION['username'], $_SESSION['password'], "dbhost.students.cs.ubc.ca:1522/stu");
 
-        if (isset($_POST['Add']) || isset($_POST['Delete'])|| isset($_POST['Edit'])|| isset($_POST['Apply_Changes'])|| isset($_POST['Search'])) {
+        if (isset($_POST['Add']) || isset($_POST['Delete']) || isset($_POST['Edit']) || isset($_POST['Apply_Changes']) || isset($_POST['Search']) || isset($_POST['Display'])) {
             POSTRequestRedirect();
         }
 

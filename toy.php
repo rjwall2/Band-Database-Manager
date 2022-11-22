@@ -25,9 +25,9 @@ session_start(); // will allow us to save login information on the server
             <form method = "POST" action = "toy.php">
                 <input type = "hidden" id="login" name = "login">
                 <label> Username: </label> 
-                    <input type = "text" value ="ora_cwl" name = "username"><br />
+                    <input id="inputField" type = "text" value ="ora_cwl" name = "username"><br />
                 <label> Password:  </label> 
-                    <input type = "password" name = "password">
+                    <input id="inputField" type = "password" name = "password">
                 <input id="submit" type = "submit" value = "Login" name = "login_submit">
             </form>
 
@@ -36,7 +36,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action = "toy.php">
             <input type="hidden" id="addBand" name="addBand">
             <label> New Band's Name: </label> 
-                <input type="text" name="newBand" required> <!-- the "NewBandName:" is not needed, name is used for identification --> 
+                <input id="inputField" type="text" name="newBand" required> <!-- the "NewBandName:" is not needed, name is used for identification --> 
             <input id="submit" type="submit" value="Add" name="Add"> 
         </form>
         
@@ -48,7 +48,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "deleteBand" name ="deleteBand">
             <label> Name of Band to Delete: </label>
-                <input type ="text" name = "deletedBand" required>
+                <input id="inputField" type ="text" name = "deletedBand" required>
             <input id="submit" type="submit" value = "Delete" name = "Delete">
         </form>
 
@@ -58,14 +58,14 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "editBand" name ="editBand">
             <label> Name of Band to Edit: </label>
-                <input type ="text" name = "editedBand" required>
+                <input id="inputField" type ="text" name = "editedBand" required>
             &nbsp;&nbsp;
             <label> New Band Name: </label>
-                <input type="text" name="newName" required> <br /><br />
+                <input id="inputField" type="text" name="newName" required> <br /><br />
             <label> New Charts Rating: </label>
-                <input type="text" name="newRating"> <br /><br />
+                <input id="inputField" type="text" name="newRating"> <br /><br />
             <label for="newLabel">New Record Label Name:</label>
-            <select name="newLabel" id="labelButton" required>
+            <select name="newLabel" id="dropDown" required>
                 <option value="">Please select an option.</option>
                 <option value="Atlantic Records">Altlantic Records</option>
                 <option value="EMI">EMI</option>
@@ -78,10 +78,10 @@ session_start(); // will allow us to save login information on the server
 
         <hr />
 
-        <h2> Display Bands </h2>
+        <!-- <h2> Display Bands </h2> -->
         <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
             <input type = "hidden" id = "displayBands" name ="displayBands">
-            <input id="submit" type="submit" value = "Display" name = "Display">
+            <input id="submit" type="submit" value = "Click Here To Display Bands" name = "Display">
         </form>
 
         <hr />
@@ -91,7 +91,7 @@ session_start(); // will allow us to save login information on the server
             <input type = "hidden" id = "selectionQuery" name ="selectionQuery">
             
             <label for="selectTableButton">Choose between Songs, Albums, or Concerts:</label>
-            <select name="selectTableButton" id="tableButton" required>
+            <select name="selectTableButton" id="dropDown" required>
                 <option value="">Please select an option.</option>
                 <option value="Songs">Songs</option>
                 <option value="Albums">Albums</option>
@@ -100,7 +100,7 @@ session_start(); // will allow us to save login information on the server
             <br><br>
 
             <label for="selectAttributeButton">Choose detail to view:</label>
-            <select name="selectAttributeButton" id="attributeButton" required>
+            <select name="selectAttributeButton" id="dropDown" required>
                 <option value="">Please select an option.</option>
             <optgroup label="Song Details">
                 <option value="SongName">Name</option>
@@ -127,7 +127,7 @@ session_start(); // will allow us to save login information on the server
             <br><br>
 
             <label>Input an X value:</label>
-                <input type ="text" name = "XAmount" required>
+                <input id="inputField" type ="text" name = "XAmount" required>
 
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
@@ -138,7 +138,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "projectionQuery" name ="projectionQuery">
             <label> Name of Band: </label>
-                <input type ="text" name = "bandProjected" required>
+                <input id="inputField" type ="text" name = "bandProjected" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -148,7 +148,7 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action = "toy.php">
             <input type = "hidden" id = "joinQuery" name ="joinQuery">
             <label> Name of Band: </label>
-                <input type ="text" name = "bandJoined" required>
+                <input id="inputField" type ="text" name = "bandJoined" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -169,8 +169,8 @@ session_start(); // will allow us to save login information on the server
         <h2> Bands That Have Earned More than Y Dollars From Total Concert Revenue  </h2>
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "havingAggregateQuery" name ="havingAggregateQuery" required>
-            <label> Y: </label>
-                <input type ="text" name = "YAmount" required>
+            <label> Input a Y Value: </label>
+                <input id="inputField" type ="text" name = "YAmount" required>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 

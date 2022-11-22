@@ -31,6 +31,8 @@ session_start(); // will allow us to save login information on the server
                 <input id="submit" type = "submit" value = "Login" name = "login_submit">
             </form>
 
+        <hr />
+
         <h2> Add a New Band </h2>
         <!-- <p style="color:blue; font-size:15px;"> Add a band by specifying their name </p> -->
         <form method = "POST" action = "toy.php">
@@ -113,7 +115,7 @@ session_start(); // will allow us to save login information on the server
                 <option value="AlbumName">Name</option>
                 <option value="ReleaseDate">Release Date</option>
                 <option value="TotalSalesRevenue">Revenue</option>
-                <option value="Band">Album</option>
+                <option value="Band">Band</option>
             </optgroup>
             <optgroup label="Concert Details">
                 <option value="DatePlayed">Date</option>

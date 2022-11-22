@@ -66,7 +66,7 @@ session_start(); // will allow us to save login information on the server
                 <input type="text" name="newLabel"> <br /><br />
             <input id="submit" type="submit" value = "Apply Changes" name = "Apply_Changes">
         </form>
-
+<!-- 
         <hr />
 
         <h2> Show Concerts That Generated Over X Dollars </h2>
@@ -74,6 +74,62 @@ session_start(); // will allow us to save login information on the server
             <input type = "hidden" id = "selectionQuery" name ="selectionQuery">
             <label> X: </label>
                 <input type ="text" name = "XAmount">
+            <input id="submit" type="submit" value = "Search" name = "Search">
+        </form>
+
+        <hr /> -->
+
+        <hr />
+
+        <h2> Show Songs, Albums, or Concerts That Generated Over X Dollars </h2>
+        <form method = "POST" action ="toy.php">
+            <input type = "hidden" id = "selectionQuery" name ="selectionQuery">
+            <p>Choose between Songs, Albums, or Concerts:</p> 
+            <!-- required attribute applies to all radio buttons with same name -->
+            <input type="radio" id = "selectSongs" value = "Songs" name = "selectTableButton" required> 
+            <label for = "selectSongs" > Songs </label><br>
+            <input type="radio" id = "selectAlbums" value = "Albums" name = "selectTableButton">
+            <label for = "selectAlbums" > Albums </label><br>
+            <input type="radio" id = "selectConcerts" value = "Concerts" name = "selectTableButton">
+            <label for = "selectConcerts" > Concerts </label><br>
+
+            <p>Which song/album/concert detail would you like to view? </p>
+            <p> For Songs: </p>
+            <input type="radio" id = "SongName" value = "SongName" name = "selectAttributeButton" required>
+            <label for = "SongName" > Name </label><br>
+            <input type="radio" id = "SongReleaseDate" value = "ReleaseDate" name = "selectAttributeButton">
+            <label for = "SongReleaseDate" > Release Date </label><br>
+            <input type="radio" id = "SongRevenue" value = "TotalSalesRevenue" name = "selectAttributeButton">
+            <label for = "SongRevenue" > Total Sales Revenue </label><br>
+            <input type="radio" id = "SongBand" value = "Band" name = "selectAttributeButton">
+            <label for = "SongBand" > Band </label><br>
+            <input type="radio" id = "SongAlbum" value = "Album" name = "selectAttributeButton">
+            <label for = "SongAlbum" > Album </label><br>
+            <p> For Albums: </p>
+            <input type="radio" id = "AlbumName" value = "AlbumName" name = "selectAttributeButton">
+            <label for = "AlbumName" > Name </label><br>
+            <input type="radio" id = "AlbumReleaseDate" value = "ReleaseDate" name = "selectAttributeButton">
+            <label for = "AlbumReleaseDate" > Release Date </label><br>
+            <input type="radio" id = "AlbumRevenue" value = "TotalSalesRevenue" name = "selectAttributeButton">
+            <label for = "AlbumRevenue" > Total Sales Revenue </label><br>
+            <input type="radio" id = "AlbumBand" value = "Band" name = "selectAttributeButton">
+            <label for = "AlbumBand" > Band </label><br>
+            <p> For Concerts: </p>
+            <input type="radio" id = "ConcertDate" value = "DatePlayed" name = "selectAttributeButton">
+            <label for = "ConcertDate" > Date </label><br>
+            <input type="radio" id = "ConcertVenue" value = "Venue" name = "selectAttributeButton">
+            <label for = "ConcertVenue" > Venue </label><br>
+            <input type="radio" id = "ConcertBandPlayed" value = "BandPlayed" name = "selectAttributeButton">
+            <label for = "ConcertBandPlayed" > Band Played </label><br>
+            <input type="radio" id = "ConcertTicketsSold" value = "TicketsSold" name = "selectAttributeButton">
+            <label for = "ConcertTicketsSold" > Number of Tickets Sold </label><br>
+            <input type="radio" id = "ConcertTicketPrice" value = "PricePerTicket" name = "selectAttributeButton">
+            <label for = "ConcertTicketPrice" > Price of Tickets </label><br>
+
+            <p>Input an X value:</p>
+            <label> X: </label>
+                <input type ="text" name = "XAmount">
+
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -328,18 +384,37 @@ session_start(); // will allow us to save login information on the server
 
         function selectConcerts(){
 
+            $tableValue = $_POST['selectTableButton'];
+            $attributeValue = $_POST['selectAttributeButton'];
             $concertRevenueThreshold = $_POST['XAmount'];
-            $results = runPlainSQL("SELECT p2.DatePlayed, p2.BandPlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > ". $concertRevenueThreshold);
-                
-            echo "<br>Selected Concerts<br>";
-            echo "<table>";
-            echo "<tr><th>DatePlayed</th><th>BandPlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
 
-            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
-                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td><td>".$row[4]."</td></tr>"; 
+            if ($tableValue == "Songs" || $tableValue == "Albums") {
+                $results = runPlainSQL("SELECT $attributeValue FROM $tableValue WHERE TotalSalesRevenue > ". $concertRevenueThreshold);
+
+                // echo 'Resulting' . htmlspecialchars($_POST['selectTableButton']);
+                echo "<br>RESULTS<br><br>";
+                echo "<table>";
+                echo "<tr><th>" . htmlspecialchars($_POST['selectAttributeButton']) . "</th></tr>";
+
+                while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                    echo "<tr><td>" . $row[0] . "</td></tr>"; 
+                }
+
+                echo "</table>";
+
+            } else {
+                $results = runPlainSQL("SELECT $attributeValue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > ". $concertRevenueThreshold);
+
+                echo "<br>RESULTS<br><br>";
+                echo "<table>";
+                echo "<tr><th>" . htmlspecialchars($_POST['selectAttributeButton']) . "</th></tr>";
+
+                while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                    echo "<tr><td>" . $row[0] . "</td></tr>"; 
+                }
+
+                echo "</table>";
             }
-
-            echo "</table>";
         }
 
         function concertHistory(){

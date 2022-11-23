@@ -60,10 +60,10 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "editBand" name ="editBand">
             <label> Name of Band to Edit: </label>
-                <input id="inputField" type ="text" name = "editedBand" required>
-            &nbsp;&nbsp;
+                <input id="inputField" type ="text" name = "editedBand" required><br /><br />
+            <!-- &nbsp;&nbsp;
             <label> New Band Name: </label>
-                <input id="inputField" type="text" name="newName" required> <br /><br />
+                <input id="inputField" type="text" name="newName" required> <br /><br /> -->
             <label> New Charts Rating: </label>
                 <input id="inputField" type="text" name="newRating"> <br /><br />
             <label for="newLabel">New Record Label Name:</label>
@@ -160,9 +160,9 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "groupByAggregateQuery" name ="groupByAggregateQuery">
             <input type="radio" id = "Song" value = "Songs" name = "groupbyButton" required>
-            <label for = "Song" > Songs </label><br>
+            <label for = "Song" > Top Grossing Songs </label><br>
             <input type="radio" id = "Albums" value = "Albums" name = "groupbyButton">
-            <label for = "Albums" > Albums </label><br><br>
+            <label for = "Albums" > Top Grossing Albums </label><br><br>
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
         
@@ -178,7 +178,7 @@ session_start(); // will allow us to save login information on the server
 
         <hr />
 
-        <h2> Cool Search 1: Find the total sales revenue of albums for each band where the total sales revenue is greater than the average sales revenue across all band albums  </h2>
+        <h2> Cool Search 1: Find the total sales revenue of albums for each band where the total <br> sales revenue is greater than the average sales revenue across all band albums  </h2>
         <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
             <input type = "hidden" id = "nestedGroupByAggregateQuery" name ="nestedGroupByAggregateQuery">
             <input id="submit" type="submit" value = "Search" name = "Search">
@@ -346,7 +346,7 @@ session_start(); // will allow us to save login information on the server
             $success = runPlainSQL("INSERT INTO Band (BandName) VALUES ('".$newBand."')");
             if($success['executionstatus']){
                 oci_commit($current_db_identifier);
-                alert_messages("added ".$newBand." to database");
+                alert_messages("Added ".$newBand." to database");
             }else{
                 alert_messages("Could not add to database");
             }
@@ -361,7 +361,7 @@ session_start(); // will allow us to save login information on the server
             $success = runPlainSQL("DELETE FROM Band WHERE BandName = '" . $delete_name . "'");
             if ($success['executionstatus']){
                 oci_commit($current_db_identifier);
-                alert_messages("successfully removed ".$delete_name." from the database");
+                alert_messages("Successfully removed ".$delete_name." from the database");
             } else {
                 alert_messages("Could not remove ".$delete_name." from the database");
             }
@@ -370,17 +370,17 @@ session_start(); // will allow us to save login information on the server
         function editBand(){
             global $current_db_identifier;
 
-            $currentBandName = $_POST['editedBand'];
-            $newBandName = $_POST['newName'];
+            $bandName = $_POST['editedBand'];
+            // $newBandName = $_POST['newName'];
             $newChartsRating = $_POST['newRating'];
             $newRecordLabel = $_POST['newLabel'];
 
-            $success = runPlainSQL("UPDATE Band SET BandName ='".$newBandName."', ChartsRating ='".$newChartsRating."', RecordLabel ='".$newRecordLabel."' WHERE BandName ='".$currentBandName. "'");
+            $success = runPlainSQL("UPDATE Band SET ChartsRating ='".$newChartsRating."', RecordLabel ='".$newRecordLabel."' WHERE BandName ='".$bandName. "'");
             if ($success['executionstatus']){
                 oci_commit($current_db_identifier);
-                alert_messages("edit successful");
+                alert_messages("Edit successful");
             } else {
-                alert_messages("edit unsuccessful");
+                alert_messages("Edit unsuccessful");
             }
         }
 
@@ -404,17 +404,22 @@ session_start(); // will allow us to save login information on the server
             $tableValue = $_POST['selectTableButton'];
             $attributeValue = $_POST['selectAttributeButton'];
             $concertRevenueThreshold = $_POST['XAmount'];
-            $select_error_message = "Invalid choice. Try again.";
 
             if ($tableValue == "Albums" && $attributeValue == "Album") {
-                alert_messages($select_error_message);
+                alert_messages("Invalid choice. Try again.");
             } else if ($tableValue == "Songs" || $tableValue == "Albums") {
                 if ($attributeValue == "DatePlayed" || $attributeValue == "Time" || $attributeValue == "Venue" || $attributeValue == "BandPlayed" || $attributeValue == "TicketsSold" || $attributeValue == "PricePerTicket") {
-                    alert_messages($select_error_message);
+                    alert_messages("Invalid choice. Try again.");
                 } else {
                     $results = runPlainSQL("SELECT $attributeValue FROM $tableValue WHERE TotalSalesRevenue > ". $concertRevenueThreshold);
+
+                    if ($results['executionstatus']){
+                        alert_messages("Success!");
+                    } else {
+                        alert_messages("Error. Try again.");
+                    }
                     
-                    echo htmlspecialchars($_POST['selectTableButton']) . ' that generated over ' . htmlspecialchars($_POST['XAmount'] . ' Dollars:');
+                    echo htmlspecialchars($_POST['selectTableButton']) . ' that generated over ' . htmlspecialchars($_POST['XAmount']) . ' dollars:';
                     echo "<table>";
                     echo "<tr><th>" . htmlspecialchars($_POST['selectAttributeButton']) . "</th></tr>";
                     
@@ -428,7 +433,13 @@ session_start(); // will allow us to save login information on the server
                 if ($attributeValue == "DatePlayed" || $attributeValue == "Time" || $attributeValue == "Venue" || $attributeValue == "BandPlayed" || $attributeValue == "TicketsSold" || $attributeValue == "PricePerTicket") {
                     $results = runPlainSQL("SELECT $attributeValue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p1.ConcertRevenue > ". $concertRevenueThreshold);
                     
-                    echo htmlspecialchars($_POST['selectTableButton']) . ' that generated over ' . htmlspecialchars($_POST['XAmount'] . ' Dollars:');
+                    if ($results['executionstatus']){
+                        alert_messages("Success!");
+                    } else {
+                        alert_messages("Error. Try again.");
+                    }
+
+                    echo htmlspecialchars($_POST['selectTableButton']) . ' that generated over ' . htmlspecialchars($_POST['XAmount']) . ' dollars:';
                     echo "<table>";
                     echo "<tr><th>" . htmlspecialchars($_POST['selectAttributeButton']) . "</th></tr>";
                     
@@ -439,7 +450,7 @@ session_start(); // will allow us to save login information on the server
 
                     echo "</table>";
                 } else {
-                    alert_messages($select_error_message);
+                    alert_messages("Invalid choice. Try again.");
                 }
             }
         }
@@ -470,15 +481,16 @@ session_start(); // will allow us to save login information on the server
             WHERE (s1.Band = '".$bandName."' and s1.SongName 
                 NOT IN 
                 (SELECT s2.SongName FROM Songs s2, Played_At pa WHERE pa.BandName = s2.Band and pa.SongName = s2.SongName))");  
+            
             if($results['executionstatus']){
-                alert_messages("join success");
+                alert_messages("Success!");
             }else{
-                alert_messages("join fail");
+                alert_messages("Error. Try again.");
             }
 
-            echo "<br>Songs that a band has never played in a concert<br>";
+            echo "<br>Songs that a band has never played in concert:<br>";
             echo "<table>";
-            echo "<tr><th>SONGNAME</th></tr>";
+            echo "<tr><th>Song Name</th></tr>";
             
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] ."</td></tr>"; 
@@ -494,9 +506,15 @@ session_start(); // will allow us to save login information on the server
             if($radioValue == "Albums") {
                 $results = runPlainSQL("SELECT Band, MAX(TotalSalesRevenue) FROM Albums GROUP BY Band");
 
-                echo "<br>Every bands top grossing album<br>";
+                if ($results['executionstatus']){
+                    alert_messages("Success!");
+                } else {
+                    alert_messages("Error. Try again.");
+                }
+
+                echo "<br>Each band's top grossing album:<br>";
                 echo "<table>";
-                echo "<tr><th>Band</th><th>MAX(TOTALSALESREVENUE)</th></tr>";
+                echo "<tr><th>Band</th><th>Total Sales Revenue</th></tr>";
 
                 while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
@@ -507,10 +525,16 @@ session_start(); // will allow us to save login information on the server
                 $results = runPlainSQL("SELECT Band, MAX(TotalSalesRevenue)
                 FROM Songs
                 GROUP BY Band");
-                //echo "$radioVal"
-                echo "<br>Every bands top grossing song<br>";
+                
+                if ($results['executionstatus']){
+                    alert_messages("Success!");
+                } else {
+                    alert_messages("Error. Try again.");
+                }
+                
+                echo "<br>Each band's top grossing song:<br>";
                 echo "<table>";
-                echo "<tr><th>Band</th><th>MAX(TOTALSALESREVENUE)</th></tr>";
+                echo "<tr><th>Band</th><th>Total Sales Revenue</th></tr>";
 
                 while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
@@ -529,10 +553,16 @@ session_start(); // will allow us to save login information on the server
             WHERE pc1.TicketsSold = pc2.TicketsSold and pc1.PricePerTicket = pc2.PricePerTicket
             GROUP BY pc2.BandPlayed
             HAVING SUM(ConcertRevenue) >".$totalconcertRevenueThreshold);
+
+            if ($results['executionstatus']){
+                alert_messages("Success!");
+            } else {
+                alert_messages("Error. Try again.");
+            }
                 
-            echo "<br>Selected Bands<br>";
+            echo 'Bands that have earned more than ' . htmlspecialchars($_POST['YAmount']) . ' dollars from total concert revenue:';
             echo "<table>";
-            echo "<tr><th>BANDPlayed</th><th>SUM(CONCERTREVENUE)</th></tr>";
+            echo "<tr><th>Band</th><th>Total Concert Revenue</th></tr>";
 
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>"; 
@@ -549,10 +579,16 @@ session_start(); // will allow us to save login information on the server
             GROUP BY    Band
             HAVING      (SUM(TotalSalesRevenue)) > (SELECT AVG(TotalSalesRevenue)
                                                     FROM Albums)");
+
+            if ($results['executionstatus']){
+                alert_messages("Success!");
+            } else {
+                alert_messages("Error. Try again.");
+            }
                 
-            echo "<br>Total Sales revenus of albums for each band where total revenue > average sales revenue across all band albums:<br>";
+            echo "<br>Total sales revenue of albums for each band where the total revenue<br>is greater than the average sales revenue across all band albums:<br>";
             echo "<table>";
-            echo "<tr><th>Band</th><th>SUM(TOTALSALESREVENUE)</tr>";
+            echo "<tr><th>Band</th><th>Total Sales Revenue</tr>";
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] ."</td><td>" . $row[1] . "</td></tr>"; 
             }
@@ -572,8 +608,14 @@ session_start(); // will allow us to save login information on the server
                    SELECT r.StreamingPlatform
                    FROM Released_On r
                    WHERE r.BandName = B.BandName)");
+
+            if ($results['executionstatus']){
+                alert_messages("Success!");
+            } else {
+                alert_messages("Error. Try again.");
+            }
                 
-            echo "<br>Bands that streamed on all platforms:<br>";
+            echo "<br>Bands that stream on all platforms:<br>";
             echo "<table>";
             echo "<tr><th>BandName</th></tr>";
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {

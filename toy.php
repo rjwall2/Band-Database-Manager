@@ -140,7 +140,15 @@ session_start(); // will allow us to save login information on the server
         <form method = "POST" action ="toy.php">
             <input type = "hidden" id = "projectionQuery" name ="projectionQuery">
             <label> Name of Band: </label>
-                <input id="inputField" type ="text" name = "bandProjected" required>
+                <input id="inputField" type ="text" name = "bandProjected" required> <br />
+            <input type="checkbox" id="dateplayed" name="dateplayed" value="p2.DatePlayed,">
+                <label for="dateplayed"> DatePlayed </label><br>
+            <input type="checkbox" id="venue" name="venue" value="p2.Venue,">
+                <label for="venue"> Venue </label><br>   
+            <input type="checkbox" id="ticketssold" name="ticketssold" value="p1.TicketsSold,">
+                <label for="ticketssold"> TicketsSold </label><br>   
+            <input type="checkbox" id="concertrevenue" name="concertrevenue" value="p1.ConcertRevenue,">  
+                <label for="concertrevenue"> ConcertRevenue </label><br>   
             <input id="submit" type="submit" value = "Search" name = "Search">
         </form>
 
@@ -458,12 +466,37 @@ session_start(); // will allow us to save login information on the server
         function concertHistory(){
 
             $bandName = $_POST['bandProjected'];
-            $results = runPlainSQL("SELECT p2.DatePlayed, p2.Venue, p1.TicketsSold, p1.ConcertRevenue FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p2.BandPlayed = '".$bandName."' ");
-       
-      
+
+            $DatePlayed = $_POST['dateplayed'];
+            $Venue = $_POST['venue'];
+            $TicketsSold = $_POST['ticketssold'];
+            $ConcertRevenue = $_POST['concertrevenue'];
+            
+            $projections = array($DatePlayed, $Venue, $TicketsSold, $ConcertRevenue);
+
+            $filtered_projections = array_values(array_filter($projections));
+
+            $filtered_projections[count($filtered_projections)-1] = rtrim($filtered_projections[count($filtered_projections)-1], ",");
+
+            $string ="";
+
+            foreach ($filtered_projections as $element){
+                $string = $string."".$element;
+            }
+
+            $results = runPlainSQL("SELECT ".$string." FROM Past_Concerts_1 p1, Past_Concerts_2 p2 WHERE p1.TicketsSold = p2.TicketsSold and p1.PricePerTicket = p2.PricePerTicket and p2.BandPlayed = '".$bandName."' ");
+
+            $var_0;
+            $var_1;
+            $var_2;
+            $var_3;
+
+            extract($filtered_projections, EXTR_PREFIX_ALL,"var" );
+
+        
             echo "<br>Past Concerts<br>";
             echo "<table>";
-            echo "<tr><th>DatePlayed</th><th>Venue</th><th>NumberofTicketsSold</th><th>ConcertRevenue</th></tr>";
+            echo "<tr><th>".$var_0."</th><th>".$var_1."</th><th>".$var_2."</th><th>".$var_3."</th></tr>";
 
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td></tr>"; 

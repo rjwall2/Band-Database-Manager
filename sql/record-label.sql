@@ -447,18 +447,33 @@ INSERT INTO Consists_Of(Band, BandMemberName, BandMemberBirthDate) VALUES ('One 
 
 INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Spotify');
 
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Amazon Music');
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Apple Music');
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'iHeartRadio');
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000000, 'Bohemian Rhapsody', 'Queen', 'Youtube Music');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (2000000000, 'Bohemian Rhapsody', 'Queen', 'Amazon Music');
 
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (700938212, 'Here Comes The Sun', 'The Beatles', 'Apple Music');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (3000000000, 'Bohemian Rhapsody', 'Queen', 'Apple Music');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (4000000000, 'Bohemian Rhapsody', 'Queen', 'iHeartRadio');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (5000000000, 'Bohemian Rhapsody', 'Queen', 'Youtube Music');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (700938212, 'Here Comes The Sun', 'The Beatles', 'Spotify');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (700, 'Here Comes The Sun', 'The Beatles', 'Amazon Music');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (7009, 'Here Comes The Sun', 'The Beatles', 'Apple Music');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (70093, 'Here Comes The Sun', 'The Beatles', 'iHeartRadio');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (700938, 'Here Comes The Sun', 'The Beatles', 'Youtube Music');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1000000, 'The Chain', 'Fleetwood Mac', 'Spotify');
 
 INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1571220, 'The Chain', 'Fleetwood Mac', 'Amazon Music');
 
 INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (1300086234, 'Radioactive', 'Imagine Dragons', 'iHeartRadio');
 
-INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (200865412, 'Good Life', 'One Republic', 'Youtube Music');
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (200865412, 'Good Life', 'One Republic', 'Spotify');
+
+INSERT INTO Released_On(NumberOfStreams, SongName, BandName, StreamingPlatform) VALUES (200000, 'Good Life', 'One Republic', 'Youtube Music');
 
 
 INSERT INTO Played_At(DatePlayed, Time, Venue, SongName, BandName) VALUES (21062013, 1900, 'Rogers Arena', 'Walk All Over You', 'AC/DC');

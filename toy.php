@@ -1,4 +1,6 @@
 <?php
+
+// code inspired by oracle-test.php from Cpsc304 tutorial 7
 ini_set('session.gc_maxlifetime', 600);
 session_set_cookie_params(600);
 session_start(); // will allow us to save login information on the server
@@ -90,6 +92,12 @@ session_start(); // will allow us to save login information on the server
         <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
             <input type = "hidden" id = "displayConcerts" name ="displayConcerts">
             <input id="submit" type="submit" value = "Click Here To Display Concerts" name = "Display">
+        </form>
+
+        <!-- fun button -->
+        <form style ="background:none;border:0px;padding:0px" method = "POST" action ="https://www.youtube.com/watch?v=AWVUp12XPpU" target = "_blank">
+            <input type = "hidden" id = "somethin" name ="somethin">
+            <input id="submit" type="submit" value = "Listen to John Cage's 4'33" name = "listen">
         </form>
 
         <hr />

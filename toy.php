@@ -86,6 +86,12 @@ session_start(); // will allow us to save login information on the server
             <input id="submit" type="submit" value = "Click Here To Display Bands" name = "Display">
         </form>
 
+        <!-- <h2> Display Concerts </h2> -->
+        <form style ="background:none;border:0px;padding:0px" method = "POST" action ="toy.php">
+            <input type = "hidden" id = "displayConcerts" name ="displayConcerts">
+            <input id="submit" type="submit" value = "Click Here To Display Concerts" name = "Display">
+        </form>
+
         <hr />
 
         <h2> Show Songs, Albums, or Concerts That Generated Over X Dollars </h2>
@@ -270,40 +276,6 @@ session_start(); // will allow us to save login information on the server
             return $results;
         }
 
-        //runs bound sql statements, use for adding tuples
-        function runBoundSQL($SQLcommand, $list) {
-
-			global $current_db_identifier;
-
-            $SQLcommandparsed = OCIParse($current_db_identifier, $SQLcommand); //parses the SQL command inputted
-
-            //checks if SQL command was parsed successfullly 
-            if (!$SQLcommandparsed) {
-                echo "<br>Cannot parse the following command: " . $SQLcommand . "<br>";
-                $error = OCI_Error($current_db_identifier); // For OCIParse errors pass the connection handle
-                echo htmlentities($error['message']);
-            }
-
-            foreach ($list as $tuple) {
-                foreach ($tuple as $bind => $val) {
-                    //echo $val;
-                    //echo "<br>".$bind."<br>";
-                    OCIBindByName($SQLcommandparsed, $bind, $val);
-                    unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
-				}
-
-                $SQLexecution = OCIExecute($SQLcommandparsed, OCI_DEFAULT); //executes the parsed SQL command
-
-                //checks if parsed SQL command executed successfully
-                if (!$SQLexecution) {
-                    echo "<br>Cannot execute the following command: " . $SQLcommand . "<br>";
-                    $error = OCI_ERROR($SQLcommandparsed); // For OCIExecute errors pass the statementhandle
-                    echo htmlentities($error['message']);
-                    echo "<br>";
-                }
-            }
-        }
-
         function POSTRequestRedirect() {
             global $current_db_identifier;
             if ($current_db_identifier) {
@@ -315,6 +287,8 @@ session_start(); // will allow us to save login information on the server
                     editBand(); 
                 } else if (array_key_exists('displayBands', $_POST)){
                     displayBands();
+                } else if (array_key_exists('displayConcerts', $_POST)){
+                    displayConcerts();
                 } else if (array_key_exists('selectionQuery', $_POST)){
                     selectConcerts();
                 } else if (array_key_exists("projectionQuery", $_POST)){
@@ -402,6 +376,21 @@ session_start(); // will allow us to save login information on the server
 
             while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
                 echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td></tr>"; 
+            }
+
+            echo "</table>";
+        }
+
+        function displayConcerts(){
+
+            $results = runPlainSQL("SELECT * FROM Past_Concerts_2");
+       
+            echo "<br>Retrieved Data:<br><br>";
+            echo "<table>";
+            echo "<tr><th>DatePlayed</th><th>Time</th><th>Venue</th><th>BandPlayed</th><th>TicketsSold</th><th>PricePerTicket</th></tr>";
+
+            while ($row = OCI_Fetch_Array($results['parsed'], OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] ."</td><td>" . $row[3] ."</td><td>" . $row[4] ."</td><td>" . $row[5] ."</td></tr>"; 
             }
 
             echo "</table>";
@@ -658,7 +647,7 @@ session_start(); // will allow us to save login information on the server
             echo "</table>";
         }
         
-        //names of form submits should not have any spaces, use _ instead
+        //names of form submits should not have any spaces, use _ instead!
         if (isset($_POST['login_submit'])){
             connect_to_database();
         }
